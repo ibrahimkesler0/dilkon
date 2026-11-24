@@ -2,6 +2,7 @@ import "./style.css";
 import Swiper from "swiper";
 import { Navigation, Pagination, Autoplay, Keyboard, A11y } from "swiper/modules";
 import "swiper/css";
+import "swiper/css/pagination";
 import { business, services, reviews, faqs } from "./data.js";
 
 const $ = (s, el = document) => el.querySelector(s);
@@ -239,9 +240,16 @@ document.head.appendChild(ldTag);
 /* ---------- 3D + preloader ---------- */
 import("./scene.js").then((m) => m.initHeroScene($("#hero-canvas")));
 
-window.addEventListener("load", () => {
-  setTimeout(() => {
-    $("#preloader").classList.add("is-done");
-    document.body.classList.remove("is-loading");
-  }, 500);
-});
+const hidePreloader = () => {
+  const pre = $("#preloader");
+  if (!pre || pre.classList.contains("is-done")) return;
+  pre.classList.add("is-done");
+  document.body.classList.remove("is-loading");
+};
+
+if (document.readyState === "complete") {
+  setTimeout(hidePreloader, 350);
+} else {
+  window.addEventListener("load", () => setTimeout(hidePreloader, 450), { once: true });
+}
+setTimeout(hidePreloader, 2500);
