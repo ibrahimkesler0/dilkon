@@ -3,300 +3,337 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>DİLKON | Dil, Konuşma ve Rehabilitasyon Merkezi</title>
-    <meta name="description" content="DİLKON Dil, Konuşma ve Rehabilitasyon Merkezi: kekemelik, gecikmiş konuşma, artikülasyon, ses bozuklukları, afazi, yutma bozuklukları, özel eğitim ve fizyoterapi alanlarında uzman kadroyla bireysel terapi." />
-    <meta name="theme-color" content="#0b1e3f" />
-    <meta property="og:title" content="DİLKON | Dil, Konuşma ve Rehabilitasyon Merkezi" />
-    <meta property="og:description" content="Her kelime bir başarı. Uzman dil ve konuşma terapistleriyle bireysel, bilimsel ve sevgi dolu terapi." />
+    <title>DİLKON — Elazığ Dil, Konuşma ve Rehabilitasyon Merkezi</title>
+    <meta
+      name="description"
+      content="DİLKON Dil Konuşma ve Rehabilitasyon Merkezi, Elazığ'da çocuk ve yetişkinler için bilimsel temelli dil ve konuşma terapisi sunar. Gecikmiş konuşma, artikülasyon, kekemelik ve özel eğitim."
+    />
+    <meta name="theme-color" content="#f2eee6" />
+    <meta property="og:title" content="DİLKON — Elazığ Dil, Konuşma ve Rehabilitasyon Merkezi" />
+    <meta
+      property="og:description"
+      content="Amacımız sadece konuşmayı düzeltmek değil, bireyin kendini güvenle ifade etmesini sağlamak."
+    />
     <meta property="og:type" content="website" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&display=swap" rel="stylesheet" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,400&display=swap"
+      rel="stylesheet"
+    />
   </head>
-  <body>
-    <!-- Preloader -->
-    <div class="preloader" id="preloader">
-      <div class="preloader__logo">
-        <span class="wave"></span><span class="wave"></span><span class="wave"></span><span class="wave"></span><span class="wave"></span>
+  <body class="is-loading">
+    <!-- Minimal Editorial Preloader with real 3D model progress -->
+    <div class="loader" id="loader" role="status" aria-live="polite">
+      <div class="loader__inner">
+        <span class="loader__tag">ELAZIĞ · DİL VE KONUŞMA MERKEZİ</span>
+        <div class="loader__wordmark">DİLKON</div>
+        <div class="loader__bar"><span id="loader-fill"></span></div>
+        <div class="loader__meta">
+          <span id="loader-label">3D anatomik sahne hazırlanıyor</span>
+          <span id="loader-pct">00%</span>
+        </div>
       </div>
-      <p>DİLKON</p>
     </div>
 
-    <!-- Header -->
-    <header class="header" id="header">
-      <div class="container header__inner">
-        <a href="#top" class="brand" aria-label="DİLKON ana sayfa">
-          <span class="brand__mark">
-            <svg viewBox="0 0 40 40" aria-hidden="true"><path d="M8 10a6 6 0 0 1 6-6h12a6 6 0 0 1 6 6v10a6 6 0 0 1-6 6h-7l-7 6v-6a4 4 0 0 1-4-4z" fill="currentColor"/><path d="M14 15v2M18 12v8M22 13.5v5M26 15v2" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg>
-          </span>
-          <span class="brand__text"><strong>DİLKON</strong><small>Dil, Konuşma ve Rehabilitasyon</small></span>
+    <!-- Continuous Full-Page Fixed 3D WebGL Stage -->
+    <div class="stage" id="stage" aria-hidden="true">
+      <canvas id="scene-canvas"></canvas>
+    </div>
+
+    <!-- Subtle Live 3D Telemetry HUD (visible throughout scroll) -->
+    <div class="hud" id="hud">
+      <div class="hud__info">
+        <span class="hud__dot"></span>
+        <span class="hud__region" id="hud-region">SOL YARIMKÜRE · DİL MERKEZİ</span>
+        <span class="hud__sep">/</span>
+        <span class="hud__angle" id="hud-angle">000°</span>
+      </div>
+      <button class="hud__orbit" id="hud-orbit-btn" type="button" aria-pressed="false" title="3D modeli fareyle serbestçe döndür">
+        <span>3D İncele</span>
+      </button>
+    </div>
+
+    <!-- Fixed Editorial Topbar -->
+    <header class="topbar" id="topbar">
+      <div class="wrap topbar__inner">
+        <a href="#giris" class="wordmark" aria-label="DİLKON ana sayfa">
+          <span class="wordmark__main">DİLKON</span>
+          <span class="wordmark__sub">Elazığ</span>
         </a>
-        <nav class="nav" id="nav">
-          <a href="#hakkimizda">Hakkımızda</a>
-          <a href="#hizmetler">Hizmetler</a>
+
+        <nav class="nav" id="nav" aria-label="Ana menü">
+          <a href="#hakkimizda">Yaklaşım</a>
+          <a href="#hizmetler">Uzmanlıklar</a>
           <a href="#surec">Süreç</a>
           <a href="#yorumlar">Yorumlar</a>
           <a href="#sss">SSS</a>
           <a href="#iletisim">İletişim</a>
         </nav>
-        <a class="btn btn--primary header__cta" data-phone-link href="#iletisim">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1z" fill="currentColor"/></svg>
-          <span>Randevu Al</span>
-        </a>
-        <button class="burger" id="burger" aria-label="Menüyü aç" aria-expanded="false"><span></span><span></span></button>
+
+        <div class="topbar__actions">
+          <a class="link-call" data-phone-link href="tel:+905364040723">
+            <span class="link-call__label" data-phone-text>0536 404 07 23</span>
+          </a>
+          <a class="cta-pill" data-whatsapp-link target="_blank" rel="noopener" href="#iletisim">
+            Randevu Al
+          </a>
+          <button class="menu-btn" id="menu-btn" type="button" aria-label="Menüyü aç" aria-expanded="false">
+            <span></span><span></span>
+          </button>
+        </div>
       </div>
     </header>
 
-    <main id="top">
-      <!-- HERO -->
-      <section class="hero">
-        <canvas id="hero-canvas" aria-hidden="true"></canvas>
-        <div class="hero__glow hero__glow--1"></div>
-        <div class="hero__glow hero__glow--2"></div>
-        <div class="container hero__inner">
-          <div class="hero__content">
-            <span class="eyebrow reveal"><span class="dot"></span> Elazığ · Dil ve Konuşma Terapisi · Özel Eğitim</span>
-            <h1 class="hero__title reveal">
-              Her ses bir hikâye,<br />
-              <em>her kelime</em> bir başarı.
-            </h1>
-            <p class="hero__lead reveal">
-              Elazığ'da çocuk ve yetişkinlere yönelik dil ve konuşma terapisi. Amacımız sadece konuşmayı düzeltmek değil; her bireyin kendini güvenle ifade etmesini sağlamak.
-            </p>
-            <div class="hero__actions reveal">
-              <a href="#iletisim" class="btn btn--primary btn--lg">Ücretsiz Ön Görüşme</a>
-              <a href="#hizmetler" class="btn btn--ghost btn--lg">Hizmetlerimiz <span aria-hidden="true">→</span></a>
-            </div>
-            <div class="hero__trust reveal">
-              <div class="rating-pill" id="hero-rating">
-                <span class="g-logo" aria-hidden="true">
-                  <svg viewBox="0 0 48 48"><path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3C33.7 32.7 29.2 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.3-.1-2.4-.4-3.5z"/><path fill="#FF3D00" d="m6.3 14.7 6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"/><path fill="#4CAF50" d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2c-2 1.5-4.6 2.4-7.2 2.4-5.2 0-9.6-3.3-11.3-7.9l-6.5 5C9.5 39.6 16.2 44 24 44z"/><path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-.8 2.2-2.2 4.2-4.1 5.6l6.2 5.2C37 39.2 44 34 44 24c0-1.3-.1-2.4-.4-3.5z"/></svg>
-                </span>
-                <span class="rating-pill__score" data-rating>5,0</span>
-                <span class="stars" aria-hidden="true">★★★★★</span>
-                <span class="rating-pill__count"><span data-review-count></span> Google yorumu</span>
-              </div>
-            </div>
-          </div>
-        </div>
-        <a href="#hakkimizda" class="scroll-cue" aria-label="Aşağı kaydır"><span></span></a>
-      </section>
-
-      <!-- MARQUEE -->
-      <div class="marquee" aria-hidden="true">
-        <div class="marquee__track">
-          <span>Gecikmiş Konuşma</span><i>✦</i><span>Artikülasyon</span><i>✦</i><span>Kekemelik</span><i>✦</i><span>Ses Bozukluğu</span><i>✦</i><span>Dil Gelişim Geriliği</span><i>✦</i><span>Özel Eğitim</span><i>✦</i><span>Aile Rehberliği</span><i>✦</i><span>Elazığ</span><i>✦</i>
-          <span>Gecikmiş Konuşma</span><i>✦</i><span>Artikülasyon</span><i>✦</i><span>Kekemelik</span><i>✦</i><span>Ses Bozukluğu</span><i>✦</i><span>Dil Gelişim Geriliği</span><i>✦</i><span>Özel Eğitim</span><i>✦</i><span>Aile Rehberliği</span><i>✦</i><span>Elazığ</span><i>✦</i>
+    <!-- Mobile Fullscreen Nav Overlay -->
+    <div class="drawer" id="drawer" aria-hidden="true">
+      <div class="drawer__inner">
+        <span class="mono-kicker">NAVİGASYON</span>
+        <nav class="drawer__nav">
+          <a href="#giris"><em>00</em>Giriş</a>
+          <a href="#hakkimizda"><em>01</em>Yaklaşımımız</a>
+          <a href="#hizmetler"><em>02</em>Uzmanlık Alanları</a>
+          <a href="#surec"><em>03</em>Terapi Süreci</a>
+          <a href="#yorumlar"><em>04</em>5 Yıldızlı Yorumlar</a>
+          <a href="#sss"><em>05</em>Sıkça Sorulanlar</a>
+          <a href="#iletisim"><em>06</em>İletişim & Konum</a>
+        </nav>
+        <div class="drawer__foot">
+          <a data-phone-link data-phone-text href="tel:+905364040723">0536 404 07 23</a>
+          <span data-address-short>Ataşehir, Zeybekler Sk. No:35 · Elazığ</span>
         </div>
       </div>
+    </div>
 
-      <!-- ABOUT -->
-      <section class="section about" id="hakkimizda">
-        <div class="container about__grid">
-          <div class="about__visual reveal">
-            <div class="about__card about__card--main">
-              <div class="about__bubbles" aria-hidden="true">
-                <span class="b b1">Merhaba!</span>
-                <span class="b b2">Anne</span>
-                <span class="b b3">Ba-ba</span>
-                <span class="b b4">Seni seviyorum</span>
-              </div>
-              <div class="about__wave" aria-hidden="true">
-                <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
-              </div>
+    <main id="smooth-content">
+      <!-- CHAPTER 01 · HERO -->
+      <section class="ch ch--hero" id="giris" data-theme="light" data-chapter="hero">
+        <div class="wrap hero__grid">
+          <div class="hero__copy">
+            <div class="hero__meta reveal">
+              <span class="mono-kicker">01 · ELAZIĞ · DİL, KONUŞMA VE REHABİLİTASYON</span>
             </div>
-            <div class="about__card about__card--float">
-              <strong data-rating>5,0</strong>
-              <span>Google puanı</span>
-              <span class="stars">★★★★★</span>
-            </div>
-          </div>
-          <div class="about__content">
-            <span class="kicker reveal">Hakkımızda</span>
-            <h2 class="section__title reveal">İletişim, hayatın <em>en güzel</em> köprüsüdür.</h2>
-            <p class="reveal">
-              DİLKON Dil Konuşma ve Rehabilitasyon Merkezi, Elazığ'da çocuk ve yetişkinlere yönelik dil ve konuşma terapisi hizmeti sunar. Uzman terapist ekibimiz gecikmiş konuşma, artikülasyon, kekemelik, ses bozukluğu ve dil gelişim geriliği gibi alanlarda bilimsel temelli yaklaşımlar uygular.
+            <h1 class="display-xl reveal">
+              Konuşma, zihnin dünyayla kurduğu <em>en ince</em> köprüdür.
+            </h1>
+            <p class="lead reveal">
+              Elazığ'da çocuk ve yetişkinlere yönelik bilimsel dil ve konuşma terapisi.
+              Amacımız yalnızca konuşmayı düzeltmek değil; her bireyin kendini güvenle ifade etmesini sağlamak.
             </p>
-            <p class="reveal">
-              Her bireyin ihtiyacına özel terapi planlarıyla iletişim becerilerini güçlendirir, aileleri sürece aktif olarak dahil ederiz. Ev programları ve düzenli geri bildirimlerle ilerlemeyi birlikte takip ederiz.
+            <div class="hero__actions reveal">
+              <a class="btn-solid" data-whatsapp-link target="_blank" rel="noopener" href="#iletisim">
+                <span>Ön Görüşme Planla</span>
+                <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M5 15L15 5M15 5H7M15 5V13" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </a>
+              <a class="btn-line" href="#hizmetler">Uzmanlık Alanları</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="wrap hero__bottom">
+          <div class="hero__stamp">
+            <span class="hero__score" data-rating>4,9</span>
+            <div class="hero__stamp-meta">
+              <span class="stars-mono" aria-label="5 üzerinden 4,9 yıldız">★★★★★</span>
+              <span><strong data-review-count>66</strong> Google değerlendirmesi · <strong data-five-count>65</strong> beş yıldız</span>
+            </div>
+          </div>
+          <div class="hero__scroll">
+            <span class="mono-kicker">AŞAĞI KAYDIR · 3D KEŞİF</span>
+            <span class="scroll-line"><i></i></span>
+          </div>
+          <div class="hero__coords">
+            <span class="mono-kicker">38°39'41"N · 39°10'32"E</span>
+            <span class="hero__status" id="clinic-status">Salı–Cumartesi · 09:00–17:00</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- CHAPTER 02 · ABOUT / PHILOSOPHY (DARK OBSIDIAN) -->
+      <section class="ch ch--dark ch--about" id="hakkimizda" data-theme="dark" data-chapter="about">
+        <div class="wrap split split--right">
+          <div class="split__spacer" aria-hidden="true"></div>
+          <div class="split__body">
+            <span class="mono-kicker reveal">02 · BİLİMSEL YAKLAŞIM · BROCA & WERNICKE</span>
+            <h2 class="display-lg reveal">
+              Her birey için <em>ölçülebilir</em> ve aile odaklı bir yol haritası.
+            </h2>
+            <p class="body-lg reveal" data-business-desc></p>
+            <p class="body-muted reveal">
+              İnsan konuşması; sol yarımküredeki Broca (üretim), Wernicke (anlama) ve bu iki merkezi birbirine bağlayan sinir ağlarının uyumuyla gerçekleşir. Terapi yaklaşımımızı bu nörolojik temel üzerine, oyun ve güvenle kuruyoruz.
             </p>
-            <ul class="checks reveal">
-              <li>Uzman dil ve konuşma terapistleri</li>
-              <li>Bireysel ve aile odaklı terapi planı</li>
-              <li>Düzenli ilerleme raporları ve ev programı</li>
-              <li>Tekerlekli sandalyeye uygun, erişilebilir merkez</li>
-            </ul>
-            <div class="stats reveal">
-              <div class="stat"><strong><span class="counter" data-to="4.9" data-decimals="1">0</span></strong><span>Google puanı</span></div>
-              <div class="stat"><strong><span class="counter" data-to="65">0</span></strong><span>Beş yıldızlı yorum</span></div>
-              <div class="stat"><strong><span class="counter" data-to="100" data-suffix="%">0</span></strong><span>Bireysel plan</span></div>
+
+            <div class="kpi-row reveal">
+              <div class="kpi">
+                <strong class="counter" data-to="4.9" data-decimals="1">4,9</strong>
+                <span>Google Puanı</span>
+              </div>
+              <div class="kpi">
+                <strong class="counter" data-to="65" data-decimals="0">65</strong>
+                <span>Beş Yıldızlı Yorum</span>
+              </div>
+              <div class="kpi">
+                <strong>Salı–Cmt</strong>
+                <span>09:00 – 17:00</span>
+              </div>
             </div>
+
+            <ul class="amenity-list reveal" id="amenity-list"></ul>
           </div>
         </div>
       </section>
 
-      <!-- SERVICES -->
-      <section class="section services" id="hizmetler">
-        <div class="container">
-          <div class="section__head">
-            <span class="kicker reveal">Hizmetlerimiz</span>
-            <h2 class="section__title reveal">Her ihtiyaca <em>uzman</em> bir dokunuş</h2>
-            <p class="section__sub reveal">Bilimsel temelli değerlendirme ve terapi yöntemleriyle, çocuk ve yetişkinlerde geniş bir yelpazede destek sunuyoruz.</p>
+      <!-- CHAPTER 03 · SERVICES + INTERACTIVE 3D BRAIN REGIONS -->
+      <section class="ch ch--stone ch--services" id="hizmetler" data-theme="light" data-chapter="services">
+        <div class="wrap split split--left">
+          <div class="split__body">
+            <span class="mono-kicker reveal">03 · UZMANLIK ALANLARI · İNTERAKTİF 3D HARİTA</span>
+            <h2 class="display-lg reveal">
+              Her terapi alanı, zihinde <em>farklı bir yolu</em> güçlendirir.
+            </h2>
+            <p class="body-muted reveal">
+              Aşağıdaki uzmanlık başlıklarının üzerine gelin veya dokunun; 3D beyin modeli ilgili konuşma ve dil bölgesini canlı olarak odaklar.
+            </p>
+
+            <div class="svc-list" id="services-list"></div>
           </div>
-          <div class="services__grid" id="services-grid"></div>
+          <div class="split__spacer" aria-hidden="true"></div>
         </div>
       </section>
 
-      <!-- PROCESS -->
-      <section class="section process" id="surec">
-        <div class="container">
-          <div class="section__head section__head--light">
-            <span class="kicker reveal">Terapi Süreci</span>
-            <h2 class="section__title reveal">Adım adım, <em>birlikte</em> ilerliyoruz</h2>
-          </div>
-          <ol class="process__steps">
-            <li class="step reveal">
-              <span class="step__num">01</span>
-              <h3>Ön Görüşme</h3>
-              <p>Ailenizle tanışır, gözlemlerinizi ve beklentilerinizi dinleriz.</p>
-            </li>
-            <li class="step reveal">
-              <span class="step__num">02</span>
-              <h3>Kapsamlı Değerlendirme</h3>
-              <p>Standart testler ve klinik gözlemle güçlü yönleri ve ihtiyaçları belirleriz.</p>
-            </li>
-            <li class="step reveal">
-              <span class="step__num">03</span>
-              <h3>Kişiye Özel Program</h3>
-              <p>Kısa ve uzun vadeli hedeflerle yazılı bir terapi ve ev programı hazırlarız.</p>
-            </li>
-            <li class="step reveal">
-              <span class="step__num">04</span>
-              <h3>Terapi ve Takip</h3>
-              <p>Düzenli seanslar, ilerleme raporları ve aile rehberliğiyle kalıcı başarı sağlarız.</p>
-            </li>
-          </ol>
+      <!-- CHAPTER 04 · PROCESS / 360° SCROLL-SCRUBBED ORBIT -->
+      <section class="ch ch--dark ch--process" id="surec" data-theme="dark" data-chapter="process">
+        <div class="wrap process__head">
+          <span class="mono-kicker reveal">04 · TERAPİ YOLCULUĞU · 360° SÜREÇ</span>
+          <h2 class="display-lg reveal">İlk karşılaşmadan <em>özgüvenli</em> iletişime.</h2>
         </div>
+
+        <div class="wrap process__timeline" id="process-list"></div>
       </section>
 
-      <!-- REVIEWS -->
-      <section class="section reviews" id="yorumlar">
-        <div class="container">
-          <div class="reviews__head">
-            <div>
-              <span class="kicker reveal">Aile Yorumları</span>
-              <h2 class="section__title reveal">Ailelerimizin <em>gülümsemesi</em>, en büyük referansımız</h2>
-            </div>
-            <div class="reviews__summary reveal">
-              <div class="reviews__score"><strong data-rating>5,0</strong><span class="stars">★★★★★</span></div>
-              <p><span data-review-count></span> Google yorumu</p>
-              <a class="btn btn--ghost btn--sm" data-maps-link target="_blank" rel="noopener">Google'da Gör ↗</a>
-            </div>
-          </div>
-        </div>
-        <div class="reviews__slider swiper reveal" id="reviews-swiper">
-          <div class="swiper-wrapper" id="reviews-wrapper"></div>
-        </div>
-        <div class="container reviews__controls">
-          <button class="slider-btn" id="rev-prev" aria-label="Önceki yorum">←</button>
-          <div class="swiper-pagination" id="rev-pagination"></div>
-          <button class="slider-btn" id="rev-next" aria-label="Sonraki yorum">→</button>
-        </div>
-      </section>
-
-      <!-- FAQ -->
-      <section class="section faq" id="sss">
-        <div class="container faq__grid">
+      <!-- CHAPTER 05 · 5-STAR GOOGLE REVIEWS CAROUSEL -->
+      <section class="ch ch--paper ch--reviews" id="yorumlar" data-theme="light" data-chapter="reviews">
+        <div class="wrap reviews__top">
           <div>
-            <span class="kicker reveal">Sıkça Sorulan Sorular</span>
-            <h2 class="section__title reveal">Aklınızdaki <em>sorular</em></h2>
-            <p class="section__sub reveal">Başka bir sorunuz mu var? Bize telefon veya WhatsApp üzerinden her zaman ulaşabilirsiniz.</p>
-            <a href="#iletisim" class="btn btn--primary reveal">Bize Ulaşın</a>
+            <span class="mono-kicker reveal">05 · DOĞRULANMIŞ 5 YILDIZLI GOOGLE YORUMLARI</span>
+            <h2 class="display-lg reveal">
+              Ailelerin deneyimi, <em>en güçlü</em> kanıtımızdır.
+            </h2>
           </div>
-          <div class="faq__list" id="faq-list"></div>
+          <div class="reviews__badge reveal">
+            <div class="reviews__badge-row">
+              <span class="reviews__big" data-rating>4,9</span>
+              <div>
+                <div class="stars-mono">★★★★★</div>
+                <small><span data-five-count>65</span> / <span data-review-count>66</span> beş yıldızlı yorum</small>
+              </div>
+            </div>
+            <a class="reviews__ext" data-maps-link target="_blank" rel="noopener">Google Haritalar'da İncele ↗</a>
+          </div>
+        </div>
+
+        <div class="reviews__track reveal">
+          <div class="swiper" id="reviews-swiper">
+            <div class="swiper-wrapper" id="reviews-wrapper"></div>
+          </div>
+        </div>
+
+        <div class="wrap reviews__bar">
+          <div class="reviews__counter">
+            <span id="rev-current">01</span>
+            <span class="reviews__slash">/</span>
+            <span id="rev-total">20</span>
+          </div>
+          <div class="reviews__progress"><i id="rev-progress"></i></div>
+          <div class="reviews__arrows">
+            <button class="icon-btn" id="rev-prev" type="button" aria-label="Önceki yorum">←</button>
+            <button class="icon-btn" id="rev-next" type="button" aria-label="Sonraki yorum">→</button>
+          </div>
         </div>
       </section>
 
-      <!-- CTA -->
-      <section class="cta">
-        <div class="container cta__inner reveal">
-          <div>
-            <h2>Çocuğunuzun konuşma gelişimi hakkında <em>endişeleriniz</em> mi var?</h2>
-            <p>Erken müdahale her şeydir. Hemen bir ön görüşme planlayalım.</p>
-          </div>
-          <div class="cta__actions">
-            <a class="btn btn--light btn--lg" data-phone-link href="#iletisim">Hemen Arayın</a>
-            <a class="btn btn--whatsapp btn--lg" data-whatsapp-link target="_blank" rel="noopener" href="#iletisim">WhatsApp</a>
+      <!-- CHAPTER 06 · FAQ -->
+      <section class="ch ch--stone ch--faq" id="sss" data-theme="light" data-chapter="faq">
+        <div class="wrap split split--right">
+          <div class="split__spacer" aria-hidden="true"></div>
+          <div class="split__body">
+            <span class="mono-kicker reveal">06 · SIKÇA SORULANLAR</span>
+            <h2 class="display-lg reveal">Başlamadan önce <em>bilmek</em> isteyecekleriniz.</h2>
+            <div class="accordion" id="faq-list"></div>
           </div>
         </div>
       </section>
 
-      <!-- CONTACT -->
-      <section class="section contact" id="iletisim">
-        <div class="container contact__grid">
-          <div class="contact__info">
-            <span class="kicker reveal">İletişim</span>
-            <h2 class="section__title reveal">Bizi <em>ziyaret</em> edin</h2>
-            <ul class="contact__list reveal">
-              <li>
-                <span class="ic"><svg viewBox="0 0 24 24"><path d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z" fill="currentColor"/></svg></span>
-                <div><small>Adres</small><a data-maps-link target="_blank" rel="noopener" data-address></a></div>
-              </li>
-              <li data-phone-row>
-                <span class="ic"><svg viewBox="0 0 24 24"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1z" fill="currentColor"/></svg></span>
-                <div><small>Telefon</small><a data-phone-link data-phone-text></a></div>
-              </li>
-              <li data-email-row>
-                <span class="ic"><svg viewBox="0 0 24 24"><path d="M4 4h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2zm8 7 8-5H4zm0 2L4 8v10h16V8z" fill="currentColor"/></svg></span>
-                <div><small>E-posta</small><a data-email-link></a></div>
-              </li>
-            </ul>
-            <div class="hours reveal">
-              <h3>Çalışma Saatleri</h3>
-              <ul id="hours-list"></ul>
+      <!-- CHAPTER 07 · CONTACT & MAP -->
+      <section class="ch ch--dark ch--contact" id="iletisim" data-theme="dark" data-chapter="contact">
+        <div class="wrap contact__head">
+          <span class="mono-kicker reveal">07 · ELAZIĞ MERKEZ · İLETİŞİM</span>
+          <h2 class="display-xl reveal">Bir telefonla <em>ilk adımı</em> atalım.</h2>
+        </div>
+
+        <div class="wrap contact__grid">
+          <div class="contact__panel reveal">
+            <div class="contact__row">
+              <span class="mono-kicker">TELEFON & WHATSAPP</span>
+              <a class="contact__big" data-phone-link data-phone-text href="tel:+905364040723">0536 404 07 23</a>
+              <div class="contact__btns">
+                <a class="btn-solid" data-whatsapp-link target="_blank" rel="noopener">WhatsApp ile Yaz</a>
+                <a class="btn-line btn-line--dark" data-phone-link href="tel:+905364040723">Hemen Ara</a>
+              </div>
+            </div>
+
+            <div class="contact__row">
+              <span class="mono-kicker">ADRES</span>
+              <a class="contact__val" data-maps-link target="_blank" rel="noopener" data-address></a>
+            </div>
+
+            <div class="contact__row">
+              <span class="mono-kicker">INSTAGRAM</span>
+              <a class="contact__val" data-instagram-link target="_blank" rel="noopener">@dilkonusmaelazig ↗</a>
+            </div>
+
+            <div class="contact__row">
+              <span class="mono-kicker">ÇALIŞMA SAATLERİ</span>
+              <ul class="hours" id="hours-list"></ul>
             </div>
           </div>
+
           <div class="contact__map reveal">
-            <iframe id="map-frame" title="DİLKON konumu" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
-            <a class="btn btn--primary contact__dir" data-directions-link target="_blank" rel="noopener">Yol Tarifi Al ↗</a>
+            <iframe
+              id="map-frame"
+              title="DİLKON Dil Konuşma ve Rehabilitasyon Merkezi Elazığ Konumu"
+              referrerpolicy="no-referrer-when-downgrade"
+              allowfullscreen
+            ></iframe>
+            <div class="contact__map-bar">
+              <span data-address-short>Ataşehir, Zeybekler Sk. No:35 · Elazığ</span>
+              <a class="map-link" data-directions-link target="_blank" rel="noopener">Yol Tarifi Al ↗</a>
+            </div>
           </div>
         </div>
+
+        <footer class="wrap footer">
+          <div class="footer__left">
+            <span class="wordmark__main">DİLKON</span>
+            <p>© <span id="year"></span> DİLKON Dil Konuşma ve Rehabilitasyon Merkezi · Elazığ</p>
+          </div>
+          <div class="footer__right">
+            <span class="footer__credit">3D Beyin Modeli: Brain Project (Apache-2.0)</span>
+            <a href="#giris" class="footer__top">Başa Dön ↑</a>
+          </div>
+        </footer>
       </section>
     </main>
 
-    <footer class="footer">
-      <div class="container footer__inner">
-        <div class="footer__brand">
-          <a href="#top" class="brand brand--light">
-            <span class="brand__mark">
-              <svg viewBox="0 0 40 40" aria-hidden="true"><path d="M8 10a6 6 0 0 1 6-6h12a6 6 0 0 1 6 6v10a6 6 0 0 1-6 6h-7l-7 6v-6a4 4 0 0 1-4-4z" fill="currentColor"/><path d="M14 15v2M18 12v8M22 13.5v5M26 15v2" stroke="#0b1e3f" stroke-width="2" stroke-linecap="round"/></svg>
-            </span>
-            <span class="brand__text"><strong>DİLKON</strong><small>Dil, Konuşma ve Rehabilitasyon</small></span>
-          </a>
-          <p>Her bireyin kendini ifade etme hakkına inanıyoruz.</p>
-        </div>
-        <div class="footer__col">
-          <h4>Bağlantılar</h4>
-          <a href="#hakkimizda">Hakkımızda</a>
-          <a href="#hizmetler">Hizmetler</a>
-          <a href="#yorumlar">Yorumlar</a>
-          <a href="#iletisim">İletişim</a>
-        </div>
-        <div class="footer__col">
-          <h4>İletişim</h4>
-          <a data-phone-link data-phone-text></a>
-          <a data-maps-link target="_blank" rel="noopener" data-address></a>
-        </div>
-      </div>
-      <div class="container footer__bottom">
-        <span>© <span id="year"></span> DİLKON Dil, Konuşma ve Rehabilitasyon Merkezi. Tüm hakları saklıdır.</span>
-        <a href="#top">Yukarı ↑</a>
-      </div>
-    </footer>
-
-    <a class="fab-whatsapp" data-whatsapp-link target="_blank" rel="noopener" aria-label="WhatsApp ile yazın" href="#iletisim">
-      <svg viewBox="0 0 32 32" aria-hidden="true"><path fill="currentColor" d="M16 3a13 13 0 0 0-11.2 19.6L3 29l6.6-1.7A13 13 0 1 0 16 3zm0 23.7a10.7 10.7 0 0 1-5.5-1.5l-.4-.2-3.9 1 1-3.8-.2-.4A10.7 10.7 0 1 1 16 26.7zm5.9-8c-.3-.2-1.9-1-2.2-1s-.5-.2-.7.2-.8 1-1 1.2-.4.2-.7 0a8.8 8.8 0 0 1-4.4-3.8c-.3-.6.3-.5 1-1.7.1-.2 0-.4 0-.6l-1-2.4c-.3-.6-.5-.5-.7-.5h-.6a1.2 1.2 0 0 0-.9.4 3.7 3.7 0 0 0-1.1 2.7 6.5 6.5 0 0 0 1.3 3.4 14.7 14.7 0 0 0 5.7 5c2.1.9 2.9 1 4 .8a3.4 3.4 0 0 0 2.2-1.6 2.8 2.8 0 0 0 .2-1.6c0-.2-.3-.3-.6-.5z"/></svg>
+    <!-- Floating WhatsApp Quick Action -->
+    <a class="wa-fab" data-whatsapp-link target="_blank" rel="noopener" aria-label="WhatsApp ile randevu al" href="#iletisim">
+      <svg viewBox="0 0 32 32" aria-hidden="true">
+        <path
+          fill="currentColor"
+          d="M16 3a13 13 0 0 0-11.2 19.6L3 29l6.6-1.7A13 13 0 1 0 16 3zm0 23.7a10.7 10.7 0 0 1-5.5-1.5l-.4-.2-3.9 1 1-3.8-.2-.4A10.7 10.7 0 1 1 16 26.7zm5.9-8c-.3-.2-1.9-1-2.2-1s-.5-.2-.7.2-.8 1-1 1.2-.4.2-.7 0a8.8 8.8 0 0 1-4.4-3.8c-.3-.6.3-.5 1-1.7.1-.2 0-.4 0-.6l-1-2.4c-.3-.6-.5-.5-.7-.5h-.6a1.2 1.2 0 0 0-.9.4 3.7 3.7 0 0 0-1.1 2.7 6.5 6.5 0 0 0 1.3 3.4 14.7 14.7 0 0 0 5.7 5c2.1.9 2.9 1 4 .8a3.4 3.4 0 0 0 2.2-1.6 2.8 2.8 0 0 0 .2-1.6c0-.2-.3-.3-.6-.5z"
+        />
+      </svg>
     </a>
 
     <script type="module" src="/src/main.js"></script>
