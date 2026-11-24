@@ -253,9 +253,10 @@ export function initHeroScene(canvas) {
     camera.aspect = w / h;
     camera.updateProjectionMatrix();
     const mobile = w < 900;
-    root.position.x = mobile ? 0 : 2.9;
+    const compact = w >= 900 && w < 1240;
+    root.position.x = mobile ? 0 : compact ? 2.15 : 2.85;
     root.position.y = mobile ? -1.6 : 0;
-    root.scale.setScalar(mobile ? 0.62 : 1);
+    root.scale.setScalar(mobile ? 0.62 : compact ? 0.84 : 1);
     canvas.style.opacity = mobile ? "0.55" : "1";
   }
   window.addEventListener("resize", resize);

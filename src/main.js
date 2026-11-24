@@ -1,8 +1,8 @@
+import "swiper/css";
+import "swiper/css/pagination";
 import "./style.css";
 import Swiper from "swiper";
 import { Navigation, Pagination, Autoplay, Keyboard, A11y } from "swiper/modules";
-import "swiper/css";
-import "swiper/css/pagination";
 import { business, services, reviews, faqs } from "./data.js";
 
 const $ = (s, el = document) => el.querySelector(s);
@@ -156,7 +156,13 @@ $$(".faq__q").forEach((btn) =>
 
 /* ---------- Header / nav ---------- */
 const header = $("#header");
-const onScroll = () => header.classList.toggle("is-scrolled", window.scrollY > 40);
+const navLinks = $$("#nav a");
+const onScroll = () => {
+  header.classList.toggle("is-scrolled", window.scrollY > 40);
+  if (window.scrollY < 200) {
+    navLinks.forEach((a) => a.classList.remove("is-active"));
+  }
+};
 window.addEventListener("scroll", onScroll, { passive: true });
 onScroll();
 
@@ -170,10 +176,9 @@ const toggleMenu = (force) => {
   document.body.style.overflow = open ? "hidden" : "";
 };
 burger.addEventListener("click", () => toggleMenu());
-$$("#nav a").forEach((a) => a.addEventListener("click", () => toggleMenu(false)));
+navLinks.forEach((a) => a.addEventListener("click", () => toggleMenu(false)));
 
 const sections = $$("main section[id]");
-const navLinks = $$("#nav a");
 const navObserver = new IntersectionObserver(
   (entries) =>
     entries.forEach((e) => {

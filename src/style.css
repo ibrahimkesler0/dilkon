@@ -321,9 +321,14 @@ em {
   font-size: 1.2rem; color: var(--navy); transition: background 0.3s, color 0.3s, transform 0.3s; flex-shrink: 0;
 }
 .slider-btn:hover { background: var(--navy); color: #fff; transform: scale(1.06); }
-.reviews__controls .swiper-pagination {
+.reviews__controls .swiper-pagination,
+.reviews__controls .swiper-pagination.swiper-pagination-horizontal.swiper-pagination-bullets,
+.reviews__controls .swiper-pagination.swiper-pagination-horizontal.swiper-pagination-bullets.swiper-pagination-bullets-dynamic {
   position: relative;
-  inset: auto;
+  left: 0;
+  right: auto;
+  top: auto;
+  bottom: auto;
   transform: none;
   flex-shrink: 0;
   --swiper-pagination-color: var(--coral);
@@ -331,10 +336,6 @@ em {
   --swiper-pagination-bullet-inactive-opacity: 0.25;
   --swiper-pagination-bullet-size: 9px;
   --swiper-pagination-bullet-horizontal-gap: 5px;
-}
-.reviews__controls .swiper-pagination.swiper-pagination-bullets-dynamic {
-  left: auto;
-  transform: none;
 }
 
 /* ---------- FAQ ---------- */
