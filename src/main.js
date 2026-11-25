@@ -4,7 +4,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Lenis from "lenis";
 import Swiper from "swiper";
-import { Navigation, Autoplay, Keyboard, A11y } from "swiper/modules";
+import { Navigation, Autoplay, Keyboard } from "swiper/modules";
 import { business, services, processSteps, reviews, faqs } from "./data.js";
 import { initBrainStage } from "./scene.js";
 
@@ -35,7 +35,7 @@ $$("[data-address]").forEach((el) => (el.textContent = business.address));
 $$("[data-address-short]").forEach((el) => (el.textContent = business.addressShort));
 $$("[data-business-desc]").forEach((el) => (el.textContent = business.description));
 
-$("#map-frame").src = `https://maps.google.com/maps?q=${business.lat},${business.lng}&z=16&hl=tr&output=embed`;
+$("#map-frame").src = `https://maps.google.com/maps?q=D%C4%B0LKON+Dil+Konu%C5%9Fma+ve+Rehabilitasyon+Merkezi,+Elaz%C4%B1%C4%9F&ll=${business.lat},${business.lng}&z=16&hl=tr&output=embed`;
 $("#year").textContent = new Date().getFullYear();
 
 // Live clinic open/closed indicator (Turkey time)
@@ -107,15 +107,17 @@ const fiveStarReviews = reviews.filter((r) => r.rating === 5);
 $("#rev-total").textContent = pad2(fiveStarReviews.length);
 
 $("#reviews-wrapper").innerHTML = fiveStarReviews
-  .map((r) => {
+  .map((r, i) => {
     const init = r.name.trim().charAt(0).toLocaleUpperCase("tr-TR");
-    return `<div class="swiper-slide">
+    const isLong = r.text.length > 220;
+    return `<div class="swiper-slide" role="group" aria-label="${i + 1} / ${fiveStarReviews.length}">
       <article class="rev-card">
         <div class="rev-card__head">
           <span class="rev-card__stars" aria-label="5 üzerinden 5 yıldız">★★★★★</span>
           <span class="rev-card__verified">5,0 · GOOGLE</span>
         </div>
         <blockquote class="rev-card__quote">“${esc(r.text)}”</blockquote>
+        ${isLong ? '<button class="rev-card__more" type="button">Devamını oku</button>' : ""}
         <div class="rev-card__foot">
           <div class="rev-card__author">
             <span class="rev-card__init">${init}</span>
@@ -130,6 +132,14 @@ $("#reviews-wrapper").innerHTML = fiveStarReviews
     </div>`;
   })
   .join("");
+
+$$(".rev-card__more").forEach((btn) =>
+  btn.addEventListener("click", () => {
+    const quote = btn.previousElementSibling;
+    const opened = quote.classList.toggle("is-open");
+    btn.textContent = opened ? "Daha az göster" : "Devamını oku";
+  })
+);
 
 $("#faq-list").innerHTML = faqs
   .map(
@@ -276,7 +286,7 @@ if (!reduceMotion) {
   gsap.ticker.lagSmoothing(0);
 }
 
-// Smooth anchor navigation
+// Smooth anchor navigation (closes mobile drawer & restarts Lenis BEFORE scrolling!)
 $$('a[href^="#"]').forEach((a) => {
   a.addEventListener("click", (e) => {
     const id = a.getAttribute("href");
@@ -285,10 +295,16 @@ $$('a[href^="#"]').forEach((a) => {
     if (!targetEl) return;
     e.preventDefault();
     if (inspecting) setInspect(false);
+    if (drawer && drawer.classList.contains("is-open")) {
+      toggleDrawer(false);
+    }
+    const offset = window.innerWidth < 960 ? -64 : -72;
     if (lenis) {
-      lenis.scrollTo(targetEl, { offset: -72, duration: 1.2 });
+      lenis.start();
+      lenis.scrollTo(targetEl, { offset, duration: 1.0, force: true });
     } else {
-      targetEl.scrollIntoView({ behavior: "smooth" });
+      const top = Math.max(0, targetEl.getBoundingClientRect().top + window.scrollY + offset);
+      window.scrollTo({ top, behavior: "smooth" });
     }
   });
 });
@@ -454,27 +470,36 @@ syncScrollChoreography();
 const revCurrent = $("#rev-current");
 const revProgress = $("#rev-progress");
 
+function syncReviewCounter(sw) {
+  const idx = (sw.realIndex ?? 0) + 1;
+  revCurrent.textContent = pad2(idx);
+  revProgress.style.width = `${(idx / fiveStarReviews.length) * 100}%`;
+}
+
 const reviewSwiper = new Swiper("#reviews-swiper", {
-  modules: [Navigation, Autoplay, Keyboard, A11y],
-  slidesPerView: 1.08,
-  spaceBetween: 18,
+  modules: [Navigation, Autoplay, Keyboard],
+  slidesPerView: 1,
+  spaceBetween: 14,
   loop: true,
-  speed: 750,
+  speed: 650,
   grabCursor: true,
   keyboard: { enabled: true },
-  autoplay: { delay: 4800, disableOnInteraction: false, pauseOnMouseEnter: true },
+  autoplay: { delay: 6500, disableOnInteraction: true, pauseOnMouseEnter: true },
   navigation: { prevEl: "#rev-prev", nextEl: "#rev-next" },
-  a11y: { prevSlideMessage: "Önceki yorum", nextSlideMessage: "Sonraki yorum" },
   breakpoints: {
     640: { slidesPerView: 1.55, spaceBetween: 20 },
     960: { slidesPerView: 2.35, spaceBetween: 24 },
     1280: { slidesPerView: 3.1, spaceBetween: 26 },
   },
   on: {
+    init(sw) {
+      syncReviewCounter(sw);
+    },
+    slideChange(sw) {
+      syncReviewCounter(sw);
+    },
     realIndexChange(sw) {
-      const idx = sw.realIndex + 1;
-      revCurrent.textContent = pad2(idx);
-      revProgress.style.width = `${(idx / fiveStarReviews.length) * 100}%`;
+      syncReviewCounter(sw);
       stage.nudgeReview(1);
     },
   },
@@ -489,20 +514,26 @@ const chapters = $$("section[data-chapter]");
 
 function syncTopbar() {
   const y = window.scrollY;
-  topbar.classList.toggle("is-scrolled", y > 36);
+  topbar.classList.toggle("is-scrolled", y > 28);
 
-  // Use live viewport geometry so topbar theme & active link are 100% instant and exact
-  let activeId = null;
-  let dark = false;
+  // Probe at exact vertical midpoint of the sticky topbar (44px) for zero lag at section boundaries
+  const probeY = 44;
+  let activeId = chapters[0]?.id || "giris";
+  let dark = chapters[0]?.dataset.theme === "dark";
+
   for (const ch of chapters) {
     const r = ch.getBoundingClientRect();
-    if (r.top <= 76 && r.bottom > 76) {
+    if (r.top <= probeY && r.bottom > probeY) {
       activeId = ch.id;
       dark = ch.dataset.theme === "dark";
       break;
     }
+    if (r.top <= probeY) {
+      activeId = ch.id;
+      dark = ch.dataset.theme === "dark";
+    }
   }
-  const showActive = y >= 160 && activeId && activeId !== "giris";
+  const showActive = y >= 140 && activeId && activeId !== "giris";
   navLinks.forEach((a) => {
     a.classList.toggle("is-active", Boolean(showActive && a.getAttribute("href") === `#${activeId}`));
   });
@@ -521,17 +552,22 @@ function toggleDrawer(force) {
   const open = force ?? !drawer.classList.contains("is-open");
   drawer.classList.toggle("is-open", open);
   drawer.setAttribute("aria-hidden", String(!open));
+  document.body.classList.toggle("is-drawer-open", open);
+  topbar.classList.toggle("is-drawer-open", open);
   menuBtn.setAttribute("aria-expanded", String(open));
-  topbar.classList.toggle("is-dark", open || topbar.classList.contains("is-dark"));
+  menuBtn.setAttribute("aria-label", open ? "Menüyü kapat" : "Menüyü aç");
   if (lenis) {
     if (open) lenis.stop();
     else lenis.start();
   }
   document.body.style.overflow = open ? "hidden" : "";
+  if (!open) syncTopbar();
 }
 
 menuBtn.addEventListener("click", () => toggleDrawer());
-$$(".drawer__nav a").forEach((a) => a.addEventListener("click", () => toggleDrawer(false)));
+window.addEventListener("keydown", (e) => {
+  if (e.key === "Escape" && drawer.classList.contains("is-open")) toggleDrawer(false);
+});
 
 // Reveal + Number Counters
 function animateCounter(el) {
@@ -557,7 +593,7 @@ const revealObs = new IntersectionObserver(
       revealObs.unobserve(e.target);
     });
   },
-  { threshold: 0.1, rootMargin: "0px 0px -30px 0px" }
+  { threshold: 0.01, rootMargin: "0px 0px 45px 0px" }
 );
 $$(".reveal").forEach((el) => revealObs.observe(el));
 

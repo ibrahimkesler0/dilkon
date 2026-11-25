@@ -415,11 +415,13 @@ export function initBrainStage({ canvas, onProgress, onReady, onTelemetry }) {
 
   // Viewport responsive layout multiplier
   let isMobile = false;
+  let aspectRatio = 1.6;
   function resize() {
-    const w = window.innerWidth;
+    const w = document.documentElement.clientWidth || window.innerWidth;
     const h = window.innerHeight;
     renderer.setSize(w, h, false);
-    camera.aspect = w / h;
+    aspectRatio = w / Math.max(1, h);
+    camera.aspect = aspectRatio;
     camera.updateProjectionMatrix();
     isMobile = w < 960;
   }
@@ -442,9 +444,12 @@ export function initBrainStage({ canvas, onProgress, onReady, onTelemetry }) {
     const activeRegion = activeServiceRegion || target.highlight || "idle";
     const regAngle = REGION_ANGLES[activeRegion] || REGION_ANGLES.idle;
 
+    // On narrow portrait mobile screens, scale camera distance cleanly from aspect ratio
+    // so the full 3D brain stays centered with generous margins on both sides (never clipped!)
+    const portraitPad = isMobile ? Math.max(0, (0.78 - aspectRatio) * 11.5) : 0;
     const goalX = isMobile ? 0 : target.x;
-    const goalY = isMobile ? target.y * 0.5 + 0.15 : target.y;
-    const goalScale = target.scale * (isMobile ? 0.68 : 1);
+    const goalY = isMobile ? (inspectMode ? 0 : target.y * 0.35 + 0.08) : target.y;
+    const goalScale = target.scale * (isMobile ? (inspectMode ? 0.66 : 0.62) : 1);
     const goalExplode = Math.max(target.explode, activeServiceRegion ? regAngle.explode : 0);
     const goalShell = activeServiceRegion ? Math.min(target.shellOpacity, regAngle.shell) : target.shellOpacity;
 
@@ -463,7 +468,7 @@ export function initBrainStage({ canvas, onProgress, onReady, onTelemetry }) {
     current.shellOpacity = THREE.MathUtils.lerp(current.shellOpacity, goalShell, k);
     current.ringOpacity = THREE.MathUtils.lerp(current.ringOpacity, target.ringOpacity, k);
     current.darkMode = THREE.MathUtils.lerp(current.darkMode, target.darkMode, k);
-    current.camZ = THREE.MathUtils.lerp(current.camZ, target.camZ + (isMobile ? 1.8 : 0), k);
+    current.camZ = THREE.MathUtils.lerp(current.camZ, target.camZ + portraitPad, k);
     current.sceneOpacity = THREE.MathUtils.lerp(current.sceneOpacity, target.sceneOpacity, k);
 
     pointer.x = THREE.MathUtils.lerp(pointer.x, pointer.tx, 0.06);
@@ -479,13 +484,15 @@ export function initBrainStage({ canvas, onProgress, onReady, onTelemetry }) {
     stageRoot.scale.setScalar(current.scale);
 
     brainPivot.rotation.set(
-      current.rotX + pointer.y * 0.14 + dragOffset.rx,
-      current.rotY + pointer.x * 0.24 + idleSpin + dragOffset.ry,
+      current.rotX + pointer.y * (isMobile ? 0.05 : 0.14) + dragOffset.rx,
+      current.rotY + pointer.x * (isMobile ? 0.08 : 0.24) + idleSpin + dragOffset.ry,
       current.rotZ
     );
 
     camera.position.z = current.camZ;
-    canvas.style.opacity = String(isMobile ? Math.min(current.sceneOpacity, 0.48) : current.sceneOpacity);
+    // Full crisp opacity in inspectMode on mobile; balanced readable presence during mobile scroll
+    const mobileCap = inspectMode ? 1 : THREE.MathUtils.lerp(0.46, 0.38, current.darkMode);
+    canvas.style.opacity = String(isMobile ? Math.min(current.sceneOpacity, mobileCap) : current.sceneOpacity);
 
     // Update each anatomical part (explode + glow + translucent shell)
     const pulse = 0.5 + 0.5 * Math.sin(t * 2.6);
@@ -584,6 +591,7 @@ export function initBrainStage({ canvas, onProgress, onReady, onTelemetry }) {
     setInspectMode(enabled) {
       inspectMode = !!enabled;
       canvas.style.pointerEvents = inspectMode ? "auto" : "none";
+      canvas.style.touchAction = inspectMode ? "none" : "auto";
       canvas.style.cursor = inspectMode ? "grab" : "default";
       if (!inspectMode) {
         dragOffset.trx = 0;
