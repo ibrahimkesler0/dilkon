@@ -35,7 +35,7 @@ $$("[data-address]").forEach((el) => (el.textContent = business.address));
 $$("[data-address-short]").forEach((el) => (el.textContent = business.addressShort));
 $$("[data-business-desc]").forEach((el) => (el.textContent = business.description));
 
-$("#map-frame").src = `https://maps.google.com/maps?q=D%C4%B0LKON+Dil+Konu%C5%9Fma+ve+Rehabilitasyon+Merkezi,+Elaz%C4%B1%C4%9F&ll=${business.lat},${business.lng}&z=16&hl=tr&output=embed`;
+$("#map-frame").src = `https://maps.google.com/maps?q=${business.lat},${business.lng}&z=16&hl=tr&output=embed`;
 $("#year").textContent = new Date().getFullYear();
 
 // Live clinic open/closed indicator (Turkey time)
